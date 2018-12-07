@@ -1,0 +1,173 @@
+<template>
+  <section id="cartoes" v-bind:class="[paddCard, (card === true ) ? activeClass: '']"> 
+    <div class="container">
+      <div class="row box">
+          <div class="col-4 txt">
+            <img src="static/img/txt-escolha.png" alt="" >
+          </div>
+          <div class="col">
+            <form action="">
+              <div class="linha">
+                <h4>Sua renda</h4>
+                  <span class="float-right valor">R$ {{renda}}</span>
+                  <input type="range" min="1" id="renda" max="12000" class="range" v-model="renda">
+              </div>
+              <div class="linha">
+                <h4>Seus benefícios</h4>
+                <div class="row">
+                  <div class="col-3">
+                    <div class="botao">
+                      <div class="">
+                        <label class="btn anuidade" for="anuidade">
+                        <input type="radio" id="anuidade" name="vantagens" value="anuidade" v-model="vantagens" >
+                        <!--<img src="static/img/zero-anuidade.png" alt="">--></label>
+                        </div>
+                        <h6>Zero Anuidade</h6>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="botao">
+                      <div class="btn">
+                        <label class="btn viagens" for="viagens">
+                        <input type="radio" id="viagens" name="vantagens" value="viagens" v-model="vantagens">
+                        <!--<img src="static/img/viagens.svg" alt="">--></label>
+                      </div>
+                      <h6>Sala VIP</h6>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="botao">
+                      <div class="btn">
+                        <label class="btn pontos" for="pontos">
+                        <input type="radio" id="pontos" name="vantagens" value="pontos" v-model="vantagens">
+                        <!--<img src="static/img/pontos.svg" alt="">--></label>
+                      </div>
+                      <h6>
+                        Acumular Pontos 
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+                {{ vantagens }}
+              </div>
+              <div class="row justify-content-center">
+                <button class="btn btn-cartao" type="submit" @click.prevent="filtroCartoes" >Confira os cartões</button>
+               <!-- v-on:click="card = !card" -->
+              </div>
+            </form>
+          </div>
+      </div>
+      
+    </div>
+    <div class="cartoes" v-if="card" v-bind:class="[bgCard, (card === true)]" >
+      
+        <div class="container">
+          <div class="row justify-content-center">
+           
+            <div class="col col-md-3" v-for="(filtro,index) in cartoes" :key="index" v-show="cardProduto">
+              <div class="brbcard">
+                {{ filtro.produto }}
+               <img :src="filtro.thumb" />
+                <ul>
+                  <li>Programa de pontos</li>
+                  <li>Cartão internacional</li>
+                  <li>Bandeira Visa</li>
+                  <li>E muito mais</li>
+                </ul>
+                <div class="btn">{{ filtro.btn }}</div>
+                <span>Mais detalhes</span>
+              </div>
+            </div>
+            <!-- <div class="col col-md-3">
+              <div class="brbcard">
+                <img src="static/img/card.png" alt="">
+                <ul>
+                  <li>Programa de pontos</li>
+                  <li>Cartão internacional</li>
+                  <li>Bandeira Visa</li>
+                  <li>E muito mais</li>
+                </ul>
+                <div class="btn">Peça o seu</div>
+                <span>Mais detalhes</span>
+              </div>
+            </div>
+            <div class="col col-md-3">
+              <div class="brbcard">
+                <img src="static/img/card.png" alt="">
+                <ul>
+                  <li>Programa de pontos</li>
+                  <li>Cartão internacional</li>
+                  <li>Bandeira Visa</li>
+                  <li>E muito mais</li>
+                </ul>
+                <div class="btn">Peça o seu</div>
+                <span>Mais detalhes</span>
+              </div>
+            </div>
+            <div class="col col-md-3">
+              <div class="brbcard">
+                <img src="static/img/card.png" alt="">
+                <ul>
+                  <li>Programa de pontos</li>
+                  <li>Cartão internacional</li>
+                  <li>Bandeira Visa</li>
+                  <li>E muito mais</li>
+                </ul>
+                <div class="btn">Peça o seu</div>
+                <span>Mais detalhes</span>
+              </div>
+            </div> -->
+          
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script>
+
+export default {
+  data(){
+    return {
+      card: true,
+      paddCard: '',
+      activeClass: 'padd',
+      bgCard: 'open',
+      /* filtro cartoes */
+      renda:100,
+      vantagens:'',
+      cartoes: [
+        {produto:'Internacional', thumb: 'static/img/card.png', vantagens: 'viagens', btn: 'link' },
+        {produto:'Platinum', thumb: 'static/img/card.png', vantagens: 'pontos', btn: 'link' },
+        {produto:'Connect', thumb: 'static/img/card.png', vantagens: 'anuidade', btn: 'link' },
+      ],
+      cardProduto: ''
+    }
+  },
+  methods:{
+    filtroCartoes: function(){
+      return 
+        if ((this.renda > 100 && this.renda < 1000) || (this.vantagens = 'viagens')){
+          return this.cardProduto = cartoes[0]
+          console.log(cardProduto)
+        } else if((this.renda > 1000 && this.renda < 4000) || (this.vantagens = 'pontos')) {
+          return this.cardProduto = cartoes[1]
+          console.log(cardProduto)
+        } else if((this.renda > 4000) || (this.vantagens = 'anuidade')){
+          return this.cartoes[2].produto = cardProduto
+          console.log(cardProduto)
+        }
+      
+      
+    },
+    
+  },
+  
+  
+}
+</script>
+
+<style lang="stylus" scoped>
+
+</style>
+
